@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
-import pandas as pd
-from sklearn.naive_bayes import GaussianNB
+import joblib
+
+# Carregar modelo treinado
+model = joblib.load("modelo.pkl")
 
 app = FastAPI()
 
-# 🔥 Configuração do CORS
+# Configuração do CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -16,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 📌 Modelo para receber os dados do frontend
+# Modelo para receber os dados do frontend
 class InputData(BaseModel):
     Álcool: float
     Ácido_Málico: float
@@ -31,38 +33,14 @@ class InputData(BaseModel):
     OD280_OD315_Vinhos_Diluídos: float
     Prolina: float
 
-# 📌 Simulação de dataset para treinamento
-data = pd.DataFrame({
-    "Álcool": np.random.rand(100),
-    "Ácido_Málico": np.random.rand(100),
-    "Cinza": np.random.rand(100),
-    "Alcalinidade_das_Cinzas": np.random.rand(100),
-    "Magnésio": np.random.rand(100),
-    "Fenóis_Totais": np.random.rand(100),
-    "Flavonoides": np.random.rand(100),
-    "Fenois_não_Flavonoides": np.random.rand(100),
-    "Intensidade_Cor": np.random.rand(100),
-    "Matiz": np.random.rand(100),
-    "OD280_OD315_Vinhos_Diluídos": np.random.rand(100),
-    "Prolina": np.random.rand(100),
-    "Classe": np.random.choice(["A", "B", "C"], 100)  # Classes de exemplo
-})
-
-X_train = data.drop(columns=["Classe"])
-y_train = data["Classe"]
-
-# 📌 Treinar modelo
-model = GaussianNB()
-model.fit(X_train, y_train)
-
-@app.get("/predict/")
-async def check_predict():
-    return {"message": "API de previsão está funcionando. Use POST para enviar dados."}
+@app.get("/")
+async def root():
+    return {"message": "API funcionando no Vercel!"}
 
 @app.post("/predict/")
 def predict(input_data: InputData):
-    # 📌 Criar array com os valores do formulário
-    user_input = np.array([[
+    # Criar array com os valores do formulário
+    user_input = np.array([[ 
         input_data.Álcool, input_data.Ácido_Málico, input_data.Cinza,
         input_data.Alcalinidade_das_Cinzas, input_data.Magnésio,
         input_data.Fenóis_Totais, input_data.Flavonoides,
@@ -71,7 +49,7 @@ def predict(input_data: InputData):
         input_data.Prolina
     ]])
 
-    # 📌 Fazer previsão
+    # Fazer previsão
     prediction = model.predict(user_input)
 
     return {"prediction": prediction[0]}
