@@ -1,9 +1,9 @@
+import joblib
+from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import pandas as pd
-from sklearn.naive_bayes import GaussianNB
-import joblib
 
-# Criar dataset fixo
+# Simulação de dataset para treinamento
 data = pd.DataFrame({
     "Álcool": np.random.rand(100),
     "Ácido_Málico": np.random.rand(100),
@@ -17,7 +17,7 @@ data = pd.DataFrame({
     "Matiz": np.random.rand(100),
     "OD280_OD315_Vinhos_Diluídos": np.random.rand(100),
     "Prolina": np.random.rand(100),
-    "Classe": np.random.choice(["A", "B", "C"], 100)
+    "Classe": np.random.choice(["A", "B", "C"], 100)  # Classes de exemplo
 })
 
 X_train = data.drop(columns=["Classe"])
@@ -27,5 +27,5 @@ y_train = data["Classe"]
 model = GaussianNB()
 model.fit(X_train, y_train)
 
-# Salvar modelo treinado
-joblib.dump(model, "modelo.pkl")
+# Salvar modelo de forma compactada
+joblib.dump(model, 'modelo.pkl', compress=3)
