@@ -1,31 +1,32 @@
 import joblib
-from sklearn.naive_bayes import GaussianNB
 import numpy as np
-import pandas as pd
+from sklearn.naive_bayes import GaussianNB
 
-# Simulação de dataset para treinamento
-data = pd.DataFrame({
-    "Álcool": np.random.rand(100),
-    "Ácido_Málico": np.random.rand(100),
-    "Cinza": np.random.rand(100),
-    "Alcalinidade_das_Cinzas": np.random.rand(100),
-    "Magnésio": np.random.rand(100),
-    "Fenóis_Totais": np.random.rand(100),
-    "Flavonoides": np.random.rand(100),
-    "Fenois_não_Flavonoides": np.random.rand(100),
-    "Intensidade_Cor": np.random.rand(100),
-    "Matiz": np.random.rand(100),
-    "OD280_OD315_Vinhos_Diluídos": np.random.rand(100),
-    "Prolina": np.random.rand(100),
-    "Classe": np.random.choice(["A", "B", "C"], 100)  # Classes de exemplo
-})
+# Simulação de dataset para treinamento (substituindo pandas por listas e arrays numpy)
+num_samples = 100
+Álcool = np.random.rand(num_samples)
+Ácido_Málico = np.random.rand(num_samples)
+Cinza = np.random.rand(num_samples)
+Alcalinidade_das_Cinzas = np.random.rand(num_samples)
+Magnésio = np.random.rand(num_samples)
+Fenóis_Totais = np.random.rand(num_samples)
+Flavonoides = np.random.rand(num_samples)
+Fenois_não_Flavonoides = np.random.rand(num_samples)
+Intensidade_Cor = np.random.rand(num_samples)
+Matiz = np.random.rand(num_samples)
+OD280_OD315_Vinhos_Diluídos = np.random.rand(num_samples)
+Prolina = np.random.rand(num_samples)
+Classe = np.random.choice(["A", "B", "C"], num_samples)
 
-X_train = data.drop(columns=["Classe"])
-y_train = data["Classe"]
+# Organizar os dados em arrays numpy
+X_train = np.column_stack((Álcool, Ácido_Málico, Cinza, Alcalinidade_das_Cinzas, Magnésio,
+                           Fenóis_Totais, Flavonoides, Fenois_não_Flavonoides, Intensidade_Cor,
+                           Matiz, OD280_OD315_Vinhos_Diluídos, Prolina))
+y_train = Classe
 
-# Treinar modelo
+# Treinar o modelo
 model = GaussianNB()
 model.fit(X_train, y_train)
 
-# Salvar modelo de forma compactada
+# Salvar o modelo compactado
 joblib.dump(model, 'modelo.pkl', compress=3)
