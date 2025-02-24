@@ -54,7 +54,7 @@ def predict(input_data: InputData):
         input_data.Alcalinidade_das_Cinzas, input_data.Magnésio,
         input_data.Fenóis_Totais, input_data.Flavonoides,
         input_data.Fenois_não_Flavonoides, input_data.Intensidade_Cor,
-        input_data.Matiz, input_data.OD280_OD315_Vinhos_Diluídos,
+        input_data.Matiz, input_data.Vinhos_Diluídos,
         input_data.Prolina
     ]])
 
