@@ -17,18 +17,18 @@ app.add_middleware(
 
 # 📌 Modelo para receber os dados do frontend
 class InputData(BaseModel):
-    alcool: float
-    acidoMalico: float
-    cinza: float
-    alcalinidadeCinzas: float
-    magnesio: float
-    fenoisTotais: float
-    flavonoides: float
-    fenoisNaoFlavonoides: float
-    intensidadeCor: float
-    matiz: float
-    vinhosDiluidos: float  # 🚀 Troquei para sem acento
-    prolina: float
+    Álcool: float
+    Ácido_Málico: float
+    Cinza: float
+    Alcalinidade_das_Cinzas: float
+    Magnésio: float
+    Fenóis_Totais: float
+    Flavonoides: float
+    Fenois_não_Flavonoides: float
+    Intensidade_Cor: float
+    Matiz: float
+    Vinhos_Diluídos: float
+    Prolina: float
 
 # 📌 Simulação de dataset para treinamento com numpy
 np.random.seed(0)  # Para garantir a mesma aleatoriedade sempre que rodar
