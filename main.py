@@ -48,20 +48,20 @@ async def check_predict():
 
 @app.post("/predict/")
 def predict(input_data: InputData):
-    # 📌 Criar array com os valores do formulário
-    user_input = np.array([[
-        input_data.Alcool, 
-        input_data.Acido_Malico, 
-        input_data.Cinza,
-        input_data.Alcalinidade_das_Cinzas, 
-        input_data.Magnesio,
-        input_data.Fenois_Totais, 
-        input_data.Flavonoides,
-        input_data.Fenois_Nao_Flavonoides, 
-        input_data.Intensidade_Cor,
-        input_data.Matiz, 
-        input_data.OD280_OD315_Vinhos_Diluidos, 
-        input_data.Prolina
+    # 📌 Criar array com os valores corretos
+    user_input = np.array([[  
+        input_data.alcool, 
+        input_data.acidoMalico, 
+        input_data.cinza,
+        input_data.alcalinidadeCinzas, 
+        input_data.magnesio,
+        input_data.fenoisTotais, 
+        input_data.flavonoides,
+        input_data.fenoisNaoFlavonoides, 
+        input_data.intensidadeCor,
+        input_data.matiz, 
+        input_data.vinhosDiluidos, 
+        input_data.prolina
     ]])
 
     # 📌 Fazer previsão
