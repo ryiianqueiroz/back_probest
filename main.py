@@ -17,18 +17,18 @@ app.add_middleware(
 
 # 📌 Modelo para receber os dados do frontend
 class InputData(BaseModel):
-    Álcool: float
-    Ácido_Málico: float
-    Cinza: float
-    Alcalinidade_das_Cinzas: float
-    Magnésio: float
-    Fenóis_Totais: float
-    Flavonoides: float
-    Fenois_não_Flavonoides: float
-    Intensidade_Cor: float
-    Matiz: float
-    Vinhos_Diluídos: float
-    Prolina: float
+    alcool: float
+    acidoMalico: float
+    cinza: float
+    alcalinidadeCinzas: float
+    magnesio: float
+    fenoisTotais: float
+    flavonoides: float
+    fenoisNaoFlavonoides: float
+    intensidadeCor: float
+    matiz: float
+    vinhosDiluidos: float  # 🚀 Troquei para sem acento
+    prolina: float
 
 # 📌 Simulação de dataset para treinamento com numpy
 np.random.seed(0)  # Para garantir a mesma aleatoriedade sempre que rodar
@@ -50,11 +50,17 @@ async def check_predict():
 def predict(input_data: InputData):
     # 📌 Criar array com os valores do formulário
     user_input = np.array([[
-        input_data.Álcool, input_data.Ácido_Málico, input_data.Cinza,
-        input_data.Alcalinidade_das_Cinzas, input_data.Magnésio,
-        input_data.Fenóis_Totais, input_data.Flavonoides,
-        input_data.Fenois_não_Flavonoides, input_data.Intensidade_Cor,
-        input_data.Matiz, input_data.Vinhos_Diluídos,
+        input_data.Alcool, 
+        input_data.Acido_Malico, 
+        input_data.Cinza,
+        input_data.Alcalinidade_das_Cinzas, 
+        input_data.Magnesio,
+        input_data.Fenois_Totais, 
+        input_data.Flavonoides,
+        input_data.Fenois_Nao_Flavonoides, 
+        input_data.Intensidade_Cor,
+        input_data.Matiz, 
+        input_data.OD280_OD315_Vinhos_Diluidos, 
         input_data.Prolina
     ]])
 
