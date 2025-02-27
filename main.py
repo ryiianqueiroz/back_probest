@@ -29,7 +29,7 @@ class InputData(BaseModel):
     matiz: float
     vinhosDiluidos: float  # 🚀 Troquei para sem acento
     prolina: float
-
+    proantocianinas: float
 # 📌 Simulação de dataset para treinamento com numpy
 np.random.seed(0)  # Para garantir a mesma aleatoriedade sempre que rodar
 
@@ -61,7 +61,8 @@ def predict(input_data: InputData):
         input_data.intensidadeCor,
         input_data.matiz, 
         input_data.vinhosDiluidos, 
-        input_data.prolina
+        input_data.prolina,
+        input_data.proantocianinas
     ]])
 
     # 📌 Fazer previsão
