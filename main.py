@@ -58,27 +58,19 @@ async def check_predict():
 async def check_predict():
     return {"message": "API de previsão está funcionando. Use POST para enviar dados."}
 
-# Rota para previsão
 @app.post("/predict/")
-def predict(input_data: InputData):
-    # 📌 Criar array com os valores corretos
-    user_input = np.array([[  
-        input_data.alcool, 
-        input_data.acidoMalico, 
-        input_data.cinza,
-        input_data.alcalinidadeCinzas, 
-        input_data.magnesio,
-        input_data.fenoisTotais, 
-        input_data.flavonoides,
-        input_data.fenoisNaoFlavonoides, 
-        input_data.intensidadeCor,
-        input_data.matiz, 
-        input_data.vinhosDiluidos, 
-        input_data.prolina,
-        input_data.proantocianinas
-    ]])
+async def predict(data: dict):
+    try:
+        # Pegando os valores e convertendo para array numpy
+        input_data = np.array(list(data.values())).reshape(1, -1)
 
-    # 📌 Fazer previsão usando o modelo treinado
-    prediction = model.predict(user_input)
+        # Fazendo a previsão
+        prediction = model.predict(input_data)
 
-    return {"classe_predita": prediction[0]}
+        # 🔥 Convertendo a previsão para int padrão do Python
+        prediction = int(prediction[0])  # Converte numpy.int64 → int
+
+        return JSONResponse(content={"prediction": prediction})
+
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
