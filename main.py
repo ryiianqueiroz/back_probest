@@ -1,21 +1,12 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 import joblib  # Carregar o modelo treinado
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-# 🔥 Configuração do CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://trabalho-probest.vercel.app"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# 📌 Carregar o modelo treinado
 try:
     model = joblib.load("modelo.pkl")
     print("✅ Modelo carregado com sucesso!")
@@ -38,6 +29,29 @@ class InputData(BaseModel):
     vinhosDiluidos: float
     prolina: float
     proantocianinas: float
+
+# 🔥 Configuração do CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://trabalho-probest.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.options("/{full_path:path}")  # Permite preflight requests
+async def preflight_request(full_path: str):
+    return JSONResponse(content={"message": "Preflight OK"}, headers={
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Allow-Headers": "*",
+    })
+
+@app.get("/predict/")
+async def check_predict():
+    return JSONResponse(content={"message": "API de previsão está funcionando."}, headers={
+        "Access-Control-Allow-Origin": "*",
+    })
 
 # Rota de teste para ver se a API está rodando
 @app.get("/predict/")
