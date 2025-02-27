@@ -9,7 +9,7 @@ app = FastAPI()
 # 🔥 Configuração do CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000, https://trabalho-probest.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,7 +35,7 @@ np.random.seed(0)  # Para garantir a mesma aleatoriedade sempre que rodar
 
 # Gerar 100 amostras de dados
 num_samples = 100
-X_train = np.random.rand(num_samples, 12)  # 12 características, como no seu dataset
+X_train = np.random.rand(num_samples, 13)  # 12 características
 y_train = np.random.choice(["A", "B", "C"], num_samples)  # Classes de exemplo
 
 # 📌 Treinar modelo
